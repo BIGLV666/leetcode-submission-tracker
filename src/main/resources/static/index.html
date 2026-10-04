@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>LeetCode Tracker</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23fff7e6'/%3E%3Cpath d='M10 8v16h12M12 16h8' fill='none' stroke='%23b66c00' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/styles.css?v=0.3.0">
+</head>
+<body>
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="brand-block">
+            <div class="brand-mark" aria-hidden="true">LC</div>
+            <div>
+                <h1>LeetCode Tracker</h1>
+                <p id="sync-status" aria-live="polite">正在读取本地记录</p>
+            </div>
+        </div>
+        <div class="topbar-actions">
+            <nav class="view-tabs" aria-label="统计视图">
+                <button class="tab-button active" type="button" data-view="overview">题目总览</button>
+                <button class="tab-button" type="button" data-view="monthly">月度报告</button>
+            </nav>
+            <button id="refresh-button" class="icon-button" type="button" title="刷新数据" aria-label="刷新数据">↻</button>
+        </div>
+    </div>
+</header>
+
+<main id="main-content">
+    <div id="error-banner" class="error-banner" role="alert" hidden></div>
+
+    <section id="overview-view" class="view active" aria-labelledby="overview-heading">
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">个人刷题记录</p>
+                <h2 id="overview-heading">题目总览</h2>
+            </div>
+            <div class="updated-at">最近刷新 <time id="updated-time">--</time></div>
+        </div>
+
+        <div class="metric-grid" aria-label="总体统计">
+            <article class="metric-item">
+                <span>做过题目</span>
+                <strong id="attempted-count">0</strong>
+                <small>按题目去重</small>
+            </article>
+            <article class="metric-item solved">
+                <span>已通过</span>
+                <strong id="solved-count">0</strong>
+                <small id="solve-rate">通过率 0%</small>
+            </article>
+            <article class="metric-item">
+                <span>提交次数</span>
+                <strong id="submission-count">0</strong>
+                <small id="average-attempts">平均 0 次/题</small>
+            </article>
+            <article class="metric-item">
+                <span>AC 提交</span>
+                <strong id="accepted-count">0</strong>
+                <small id="accepted-rate">提交通过率 0%</small>
+            </article>
+        </div>
+
+        <section class="problem-section" aria-labelledby="problem-list-heading">
+            <div class="section-toolbar">
+                <div>
+                    <h3 id="problem-list-heading">题目记录</h3>
+                    <p id="problem-result-count">0 道题</p>
+                </div>
+                <div class="filter-controls">
+                    <label class="search-control">
+                        <span class="sr-only">搜索题目</span>
+                        <input id="problem-search" type="search" placeholder="搜索标题或 slug">
+                    </label>
+                    <label>
+                        <span class="sr-only">完成状态</span>
+                        <select id="status-filter">
+                            <option value="all">全部状态</option>
+                            <option value="solved">已通过</option>
+                            <option value="unsolved">未通过</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="table-shell">
+                <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">状态</th>
+                        <th scope="col">题目</th>
+                        <th scope="col">难度</th>
+                        <th scope="col">提交</th>
+                        <th scope="col">AC</th>
+                        <th scope="col">首次通过</th>
+                        <th scope="col">最近提交</th>
+                    </tr>
+                    </thead>
+                    <tbody id="problem-table-body"></tbody>
+                </table>
+                <div id="problem-empty" class="empty-state" hidden>
+                    <strong>暂无匹配题目</strong>
+                    <span>提交记录同步后会显示在这里</span>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section id="monthly-view" class="view" aria-labelledby="monthly-heading" hidden>
+        <div class="page-heading monthly-heading-row">
+            <div>
+                <p class="eyebrow">月度复盘</p>
+                <h2 id="monthly-heading">月度报告</h2>
+            </div>
+            <div class="month-control" aria-label="选择报告月份">
+                <button id="previous-month" class="icon-button" type="button" title="上个月" aria-label="上个月">←</button>
+                <input id="month-picker" type="month" aria-label="报告月份">
+                <button id="next-month" class="icon-button" type="button" title="下个月" aria-label="下个月">→</button>
+            </div>
+        </div>
+
+        <div class="metric-grid monthly-metrics" aria-label="月度统计">
+            <article class="metric-item">
+                <span>当月提交</span>
+                <strong id="month-submissions">0</strong>
+                <small id="month-active-days">活跃 0 天</small>
+            </article>
+            <article class="metric-item solved">
+                <span>当月 AC</span>
+                <strong id="month-accepted">0</strong>
+                <small id="month-accepted-rate">通过率 0%</small>
+            </article>
+            <article class="metric-item">
+                <span>尝试题目</span>
+                <strong id="month-attempted">0</strong>
+                <small>当月去重</small>
+            </article>
+            <article class="metric-item">
+                <span>通过题目</span>
+                <strong id="month-solved">0</strong>
+                <small id="month-solve-rate">题目通过率 0%</small>
+            </article>
+        </div>
+
+        <section class="activity-section" aria-labelledby="activity-heading">
+            <div class="section-title-row">
+                <div>
+                    <h3 id="activity-heading">每日提交趋势</h3>
+                    <p id="activity-summary">本月暂无提交</p>
+                </div>
+                <div class="chart-legend" aria-label="图例">
+                    <span><i class="legend-total"></i>提交</span>
+                    <span><i class="legend-accepted"></i>AC</span>
+                </div>
+            </div>
+            <div id="activity-chart" class="activity-chart" role="img" aria-label="每日提交趋势图"></div>
+        </section>
+
+        <div class="report-grid">
+            <section class="distribution-panel" aria-labelledby="status-heading">
+                <div class="section-title-row compact">
+                    <h3 id="status-heading">判题结果</h3>
+                    <span id="status-total">0 次</span>
+                </div>
+                <div id="status-distribution" class="distribution-list"></div>
+            </section>
+
+            <section class="distribution-panel" aria-labelledby="language-heading">
+                <div class="section-title-row compact">
+                    <h3 id="language-heading">语言分布</h3>
+                    <span id="language-total">0 次</span>
+                </div>
+                <div id="language-distribution" class="distribution-list"></div>
+            </section>
+        </div>
+
+        <section class="accepted-section" aria-labelledby="accepted-heading">
+            <div class="section-title-row">
+                <div>
+                    <h3 id="accepted-heading">当月通过题目</h3>
+                    <p id="accepted-question-count">0 道</p>
+                </div>
+            </div>
+            <div id="accepted-question-list" class="accepted-list"></div>
+        </section>
+
+        <section class="card-section" aria-labelledby="card-heading">
+            <div class="section-title-row">
+                <div>
+                    <h3 id="card-heading">分享卡片</h3>
+                    <p>手账风月报卡片，可导出 PNG 发朋友圈</p>
+                </div>
+                <div class="card-actions">
+                    <button id="generate-card" class="action-button" type="button">生成月报卡片</button>
+                    <button id="export-card" class="action-button primary" type="button" disabled>导出 PNG</button>
+                </div>
+            </div>
+            <div id="card-preview" class="card-preview" hidden>
+                <img id="card-preview-image" alt="月报分享卡片预览">
+                <p id="card-status" class="card-status"></p>
+            </div>
+        </section>
+    </section>
+</main>
+
+<dialog id="problem-detail-dialog" class="detail-dialog" aria-labelledby="detail-title">
+    <div class="detail-layout">
+        <header class="detail-header">
+            <div>
+                <p class="eyebrow">题目提交详情</p>
+                <div class="detail-title-row">
+                    <h2 id="detail-title">--</h2>
+                    <span id="detail-difficulty" class="difficulty-badge unknown">未知</span>
+                </div>
+                <p id="detail-slug" class="problem-slug">--</p>
+            </div>
+            <form method="dialog">
+                <button class="dialog-close" type="submit" aria-label="关闭详情">×</button>
+            </form>
+        </header>
+        <div class="detail-summary">
+            <span id="detail-status" class="status-badge">未通过</span>
+            <span id="detail-submission-count">0 次提交</span>
+            <a id="detail-problem-link" href="#" target="_blank" rel="noreferrer">打开力扣题目 ↗</a>
+        </div>
+        <div id="detail-loading" class="detail-loading">正在读取提交记录…</div>
+        <div id="detail-empty" class="empty-state" hidden>
+            <strong>暂无提交记录</strong>
+            <span>完成一次提交后会显示在这里</span>
+        </div>
+        <div id="submission-list" class="submission-list"></div>
+    </div>
+</dialog>
+
+<script src="/app.js?v=0.3.0" defer></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+server:
+  port: ${TRACKER_PORT:8088}
+
+spring:
+  application:
+    name: leetcode-submission-tracker
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/leetcode_tracker?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: ${MYSQL_PASSWORD:changeme}
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+
+api-scanner:
+  internal-token: ${CODEWISE_INTERNAL_TOKEN:}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+tracker:
+  api-key: leetcode-tracker-local
+  user-id: 1
+  code-key: KBcWu9PGb3SwIdrAZz4/cZyc4UOkDUZIZY8VX6sf0gY=

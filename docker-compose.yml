@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: leetcode-tracker-mysql
+    environment:
+      MYSQL_DATABASE: leetcode_tracker
+      MYSQL_USER: tracker
+      MYSQL_PASSWORD: tracker_dev_password
+      MYSQL_ROOT_PASSWORD: root_dev_password
+      TZ: Asia/Shanghai
+    ports:
+      - "3307:3306"
+    volumes:
+      - tracker_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot_dev_password"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  tracker_mysql_data:

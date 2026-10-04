@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #f2e9dc; color: #4b3f33;
+  font-family: "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+  display: flex; justify-content: center; padding: 24px 0;
+}
+.share {
+  width: 1080px; background: #fdf9f2; border-radius: 32px; overflow: hidden;
+  border: 2px dashed #e5d5bb;
+}
+.share .inner { padding: 60px 64px 48px; }
+.share .head { display: flex; align-items: center; gap: 18px; }
+.share .head .emoji { font-size: 52px; }
+.share h1 { font-size: 52px; font-weight: 800; }
+.share .when { margin-left: auto; font-size: 24px; color: #b09a7c; font-weight: 700; }
+.share .sub { margin-top: 10px; font-size: 23px; color: #8a7a63; }
+.share .pills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 38px 0 8px; }
+.share .pill { border-radius: 999px; padding: 26px 10px 22px; text-align: center; border: 2px dashed; }
+.share .pill .num { font-size: 56px; font-weight: 800; line-height: 1.15; }
+.share .pill .lab { font-size: 21px; margin-top: 2px; font-weight: 600; }
+.share .pill.c1 { background: #ffe9e2; border-color: #ff8f70; color: #c2410c; }
+.share .pill.c2 { background: #fff3d6; border-color: #eec253; color: #92600a; }
+.share .pill.c3 { background: #e8f3dd; border-color: #95bd7a; color: #3f6212; }
+.share .sec { font-size: 22px; font-weight: 800; margin: 40px 0 18px; }
+.share .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; }
+.share .cal .wd { text-align: center; font-size: 18px; color: #c4b190; font-weight: 700; }
+.share .cal .cell {
+  aspect-ratio: 1; border-radius: 16px; border: 2px dashed #e8dcc6;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; color: #c4b190; background: transparent;
+}
+.share .cal .cell.off { border: none; }
+.share .cal .cell.l1 { background: #ffe4cc; border: 2px solid #ffd0a8; color: #b45309; }
+.share .cal .cell.l2 { background: #ffc4a3; border: none; color: #9a3412; }
+.share .cal .cell.l3 { background: #ff9d6b; border: none; color: #7c2d12; }
+.share .cal .cell.l4 { background: #ff6f4d; border: none; color: #fff; font-weight: 800; }
+.share .stack { display: flex; height: 42px; border-radius: 999px; overflow: hidden; border: 2px dashed #e5d5bb; }
+.share .stack .seg { display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; font-weight: 700; white-space: nowrap; overflow: hidden; }
+.share .legend { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 16px; }
+.share .legend .li { display: flex; align-items: center; gap: 9px; font-size: 20px; font-weight: 600; }
+.share .legend .dot { width: 14px; height: 14px; border-radius: 50%; }
+.share .legend .cnt { color: #b09a7c; font-size: 17px; font-weight: 500; }
+.share .stuck { display: flex; flex-direction: column; gap: 14px; }
+.share .stuck .row {
+  background: #fff4d6; border: 2px dashed #eec253; border-radius: 18px;
+  padding: 16px 22px; display: flex; align-items: center; gap: 14px;
+}
+.share .stuck .t { font-size: 23px; font-weight: 700; flex: 1; }
+.share .stuck .meta { font-size: 18px; color: #92600a; font-weight: 600; }
+.share .foot {
+  margin-top: 46px; padding-top: 22px; border-top: 2px dashed #e5d5bb;
+  display: flex; justify-content: space-between; font-size: 20px; color: #b09a7c;
+}
+</style>
+</head>
+<body>
+<div class="share" id="share">
+  <div class="inner">
+    <div class="head">
+      <div class="emoji">📘</div>
+      <h1>9 月刷题手账</h1>
+      <div class="when">2026.09</div>
+    </div>
+    <div class="sub">打卡 23/30 天 · 提交 294 次 · 都是很棒的努力</div>
+
+    <div class="pills">
+      <div class="pill c1"><div class="num">176</div><div class="lab">题 AC</div></div>
+      <div class="pill c2"><div class="num">294</div><div class="lab">次提交</div></div>
+      <div class="pill c3"><div class="num">60%</div><div class="lab">一发即中</div></div>
+    </div>
+
+    <div class="sec">🌟 打卡日历</div>
+    <div class="cal"><div class="wd">一</div><div class="wd">二</div><div class="wd">三</div><div class="wd">四</div><div class="wd">五</div><div class="wd">六</div><div class="wd">日</div><div class="cell off"></div><div class="cell" title="2026-09-01：提交 0 次">1</div><div class="cell" title="2026-09-02：提交 0 次">2</div><div class="cell l3" title="2026-09-03：提交 6 次，AC 4 次">3</div><div class="cell l3" title="2026-09-04：提交 6 次，AC 5 次">4</div><div class="cell" title="2026-09-05：提交 0 次">5</div><div class="cell l2" title="2026-09-06：提交 3 次，AC 2 次">6</div><div class="cell l4" title="2026-09-07：提交 27 次，AC 22 次">7</div><div class="cell l4" title="2026-09-08：提交 14 次，AC 10 次">8</div><div class="cell l2" title="2026-09-09：提交 3 次，AC 2 次">9</div><div class="cell l4" title="2026-09-10：提交 15 次，AC 11 次">10</div><div class="cell l4" title="2026-09-11：提交 10 次，AC 5 次">11</div><div class="cell l1" title="2026-09-12：提交 1 次，AC 1 次">12</div><div class="cell l4" title="2026-09-13：提交 27 次，AC 18 次">13</div><div class="cell l4" title="2026-09-14：提交 11 次，AC 6 次">14</div><div class="cell" title="2026-09-15：提交 0 次">15</div><div class="cell l4" title="2026-09-16：提交 30 次，AC 18 次">16</div><div class="cell l3" title="2026-09-17：提交 7 次，AC 4 次">17</div><div class="cell l4" title="2026-09-18：提交 16 次，AC 13 次">18</div><div class="cell l4" title="2026-09-19：提交 16 次，AC 12 次">19</div><div class="cell l4" title="2026-09-20：提交 24 次，AC 15 次">20</div><div class="cell l4" title="2026-09-21：提交 10 次，AC 8 次">21</div><div class="cell l2" title="2026-09-22：提交 3 次，AC 1 次">22</div><div class="cell l4" title="2026-09-23：提交 14 次，AC 10 次">23</div><div class="cell l2" title="2026-09-24：提交 4 次，AC 3 次">24</div><div class="cell l4" title="2026-09-25：提交 18 次，AC 10 次">25</div><div class="cell l4" title="2026-09-26：提交 11 次，AC 6 次">26</div><div class="cell l4" title="2026-09-27：提交 18 次，AC 13 次">27</div><div class="cell" title="2026-09-28：提交 0 次">28</div><div class="cell" title="2026-09-29：提交 0 次">29</div><div class="cell" title="2026-09-30：提交 0 次">30</div></div>
+
+    <div class="sec">💬 语言占比</div>
+    <div class="stack"><div class="seg" style="width:57.5%;background:#ff6f4d">Java 57%</div><div class="seg" style="width:19.7%;background:#f5b73d">Go 20%</div><div class="seg" style="width:15.3%;background:#7fb069"></div><div class="seg" style="width:7.5%;background:#6fa8dc"></div></div>
+    <div class="legend"><div class="li"><span class="dot" style="background:#ff6f4d"></span>Java<span class="cnt">169 次 · 57%</span></div><div class="li"><span class="dot" style="background:#f5b73d"></span>Go<span class="cnt">58 次 · 20%</span></div><div class="li"><span class="dot" style="background:#7fb069"></span>Python<span class="cnt">45 次 · 15%</span></div><div class="li"><span class="dot" style="background:#6fa8dc"></span>MySQL<span class="cnt">22 次 · 7%</span></div></div>
+
+    <div class="sec">🌵 最难缠的题</div>
+    <div class="stuck"><div class="row"><div class="t">164. 最大间距</div><div class="meta">失败 4 次 · 已攻克 ✓</div></div><div class="row"><div class="t">1520. 最多的不重叠子字符串</div><div class="meta">失败 3 次 · 已攻克 ✓</div></div><div class="row"><div class="t">189. 轮转数组</div><div class="meta">失败 3 次 · 已攻克 ✓</div></div></div>
+
+    <div class="foot">
+      <div>下个月也要天天打卡鸭 🦆</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
